@@ -24,6 +24,11 @@ public class BoardRepository {
     // }
 
     public Board findById(int id) {
+        // select * from board_tb where id = 1; 을 찾아라 (캐싱 후 없으면 DB에 쿼리 보내기기)
+        // ResultSet rs -> Board 객체 옮기기 (Object Mapping) (답장(rs)오면 board 객체로 만들기 이걸
+        // Object Mapping라 한다.)
+        // Board board = new Board(); (이 때 새로운 객체 생성)
+        // board.id = rs.getInt("id"); (리플렉션은은 private 변수에 접근이 가능 그래서 set 없이 접근 가능)
         Board board = em.find(Board.class, id);
         return board;
     }
