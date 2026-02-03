@@ -44,10 +44,11 @@ public class BoardRepositoryTest {
         // given
         int id = 1;
         // when
-        Board board = boardRepository.findById(id);
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없어요"));
         // boardRepository.findById(1);
         // eye
-        System.out.println(board);
+        System.out.println("board : " + board);
     }
 
     @Test
@@ -61,16 +62,10 @@ public class BoardRepositoryTest {
     }
 
     @Test
-    public void findAllV2_test() {
-        // when
-        boardRepository.findAllV2();
-        // eye
-    }
-
-    @Test
     public void delete_test() { // id에의해서 삭제 되는게 아니라서 객체에 따라 삭제라서 deleteById 가 아니다.
         // given
-        Board board = boardRepository.findById(1);
+        Board board = boardRepository.findById(1)
+                .orElseThrow(() -> new RuntimeException("해당 게시글을 찾을 수 없어요"));
 
         // when
         boardRepository.delete(board);
@@ -82,7 +77,8 @@ public class BoardRepositoryTest {
     @Test
     public void update_test() {
         // given
-        Board board = boardRepository.findById(1);
+        Board board = boardRepository.findById(1)
+                .orElseThrow(() -> new RuntimeException("해당 게시글을 찾을 수 없어요"));
 
         // when
         board.setTitle("title1-update");
@@ -109,4 +105,21 @@ public class BoardRepositoryTest {
         boardRepository.findById(id);
     }
 
+    @Test
+    public void orm_test() {
+        int id = 1;
+
+        Board board = boardRepository.findById(id).get();
+        System.out.println("board->user->id : " + board.getUser().getId());
+        System.out.println("===============================================");
+        System.out.println("board->user->id : " + board.getUser().getUsername());
+    }
+
+    @Test
+    public void orm_v2_test() {
+        int id = 1;
+
+        Board board = boardRepository.findById(id).get();
+        System.out.println(board);
+    }
 }

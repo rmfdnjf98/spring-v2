@@ -11,10 +11,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor // object mapping을 hibernate가 할 때 디폴트 생성자를 new를 한다.
-@Data
+@Getter
+@Setter
 @Entity // Entity가 붙어있어야 pc가 접근 할 수 있다.
 @Table(name = "user_tb")
 public class User {
@@ -29,4 +32,10 @@ public class User {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @Override
+    public String toString() {
+        return "user : " + id + ", " + username;
+    }
+
 }

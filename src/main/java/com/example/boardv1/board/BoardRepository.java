@@ -1,6 +1,7 @@
 package com.example.boardv1.board;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -23,24 +24,31 @@ public class BoardRepository {
     // this.em = em;
     // }
 
-    public Board findById(int id) {
+    public Optional<Board> findByIdJoinUser() {
+        Query query = em.createQuery("select b from Board b join fetch b.user where b.id = :id", Board.class);
+        query.setParameter("id", id);
+        try {
+            Board board = (Board) query.getSingleResult();
+            return Optional.of(board);
+        } catch (Exception e) {
+            return Optional.ofNullable(null);
+        }
+    }
+
+    public Optional<Board> findById(int id) {
         // select * from board_tb where id = 1; 을 찾아라 (캐싱 후 없으면 DB에 쿼리 보내기기)
         // ResultSet rs -> Board 객체 옮기기 (Object Mapping) (답장(rs)오면 board 객체로 만들기 이걸
         // Object Mapping라 한다.)
         // Board board = new Board(); (이 때 새로운 객체 생성)
         // board.id = rs.getInt("id"); (리플렉션은은 private 변수에 접근이 가능 그래서 set 없이 접근 가능)
         Board board = em.find(Board.class, id);
-        return board;
+        // System.out.println("board : " + board);
+        return Optional.ofNullable(board);
     }
 
     public List<Board> findAll() {
-        Query query = em.createQuery("select b from Board b order by b.id desc", Board.class);
-        List<Board> list = query.getResultList();
-        return list;
-    }
-
-    public void findAllV2() {
-        em.createQuery("select b.id, b.title from Board b").getResultList();
+        return em.createQuery("select b from Board b order by b.id desc", Board.class)
+                .getResultList();
     }
 
     public Board save(Board board) {
