@@ -1,6 +1,5 @@
 package com.example.boardv1.user;
 
-import org.springframework.boot.web.server.servlet.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +16,16 @@ public class UserController {
     private final UserService userService;
     private final HttpSession session;
 
+    @GetMapping("/logout")
+    public String logout() {
+        session.invalidate(); // 모두 비우는 코드
+        return "redirect:/";
+    }
+
     // 조회인데, 예외로 post 요청!!
     @PostMapping("/login")
     public String login(UserRequest.LoginDTO reqDTO, HttpServletResponse resp) {
         // HttpSession session = req.getSession();
-        System.out.println("dfsadfssadfsad");
         User sessionUser = userService.로그인(reqDTO.getUsername(), reqDTO.getPassword());
         session.setAttribute("sessionUser", sessionUser);
         // http Response header에 Set-Cookie: sessionKey 저장되서 응답됨.

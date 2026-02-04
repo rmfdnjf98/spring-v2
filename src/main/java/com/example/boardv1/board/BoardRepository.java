@@ -24,7 +24,7 @@ public class BoardRepository {
     // this.em = em;
     // }
 
-    public Optional<Board> findByIdJoinUser() {
+    public Optional<Board> findByIdJoinUser(int id) {
         Query query = em.createQuery("select b from Board b join fetch b.user where b.id = :id", Board.class);
         query.setParameter("id", id);
         try {
