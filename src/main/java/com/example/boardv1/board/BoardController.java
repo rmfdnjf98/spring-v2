@@ -3,12 +3,11 @@ package com.example.boardv1.board;
 import java.io.IOException;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.boardv1.user.User;
 
@@ -96,4 +95,13 @@ public class BoardController {
         boardService.게시글삭제(id, sessionUser.getId());
         return "redirect:/";
     }
+
+    @GetMapping("/api/boards/{id}")
+    public @ResponseBody BoardResponse.DetailDTO apiDetail(@PathVariable("id") int id) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        Integer sessionUserId = sessionUser == null ? null : sessionUser.getId();
+        BoardResponse.DetailDTO dto = boardService.상세보기(id, sessionUserId);
+        return dto;
+    }
+
 }

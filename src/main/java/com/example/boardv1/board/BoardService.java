@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.boardv1.reply.Reply;
+
 import lombok.RequiredArgsConstructor;
 
 // 책임 : 트랜잭션 관리, DTO만들기, 권한 체크(DB 정보가 필요하니까)  

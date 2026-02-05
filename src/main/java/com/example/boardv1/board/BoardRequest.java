@@ -9,6 +9,5 @@ public class BoardRequest {
     public static class SaveOrUpdateDTO {
         private String title;
         private String content;
-
     }
 }

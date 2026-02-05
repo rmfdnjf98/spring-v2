@@ -28,7 +28,8 @@
         <!-- 댓글등록 -->
         <div class="card-body">
             <form action="/replies/save" method="post">
-                <textarea class="form-control" rows="2" name="comment"></textarea>
+            <input type="hidden" name="boardId" value="{{model.id}}" />
+                <textarea id="comment" class="form-control" rows="2" name="comment"></textarea>
                 <div class="d-flex justify-content-end">
                 <button class="btn btn-secondary mt-1">                        
                         댓글등록    
@@ -42,29 +43,35 @@
             <b>댓글리스트</b>
         </div>
         <div class="list-group">
-            <!-- 댓글아이템 -->
-            <div class="list-group-item d-flex justify-content-between align-items-center">
+
+            {{#model.replies}}
+                <div class="list-group-item d-flex justify-content-between align-items-center">
                 <div class="d-flex">
-                    <div class="px-1 me-1 bg-secondary text-white rounded">익명</div>
-                    <div>댓글 내용2</div>
+                    <div class="px-1 me-1 bg-secondary text-white rounded">{{replyUsername}}</div>
+                    <div>{{comment}}</div>
                 </div>
-                <form action="/replies/1/delete" method="post">
+                {{#isReplyOwner}}
+                <form action="/replies/{{id}}/delete?boardId={{model.id}}" method="post">
                     <button class="btn">🗑</button>
                 </form>
+                {{/isReplyOwner}}
             </div>
-            <!-- 댓글아이템 -->
-            <div class="list-group-item d-flex justify-content-between align-items-center">
-                <div class="d-flex">
-                    <div class="px-1 me-1 bg-secondary text-white rounded">익명</div>
-                    <div>댓글 내용1</div>
-                </div>
-                <form action="/replies/1/delete" method="post">
-                    <button class="btn">🗑</button>
-                </form>
-            </div>
+            {{/model.replies}}
+            
         </div>
     </div>
 </div>
-
+<script>
+    {{^sessionUser}}
+    // 1. 조건 (querySelector 사용, textArea에 comment 라는 id 하나 추가하기)
+    const textArea = document.querySelector('#comment');
+    // 2. textArea에 마우스로 클릭했을 때 이벤트 리스너가 필요
+    // 3. 이 때 행위가 필요 -> 알림창을 띄워서 로그인하세요 라고 알려줘!
+    textArea.addEventListener('click', function() { // 이벤트, 행위
+        alert('로그인하세요');
+        location.href = "/login-form";
+    });
+    {{/sessionUser}}
+</script>
 </body>
 </html>
