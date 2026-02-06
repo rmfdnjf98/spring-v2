@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
+      rel="stylesheet"
+    />
+
+    <title>게시글 작성</title>
+  </head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+  <body>
+    <h2>게시글 작성</h2>
+
+    <form action="/boards/save" method="post">
+      <input type="text" placeholder="제목" /><br /><br />
+      <textarea id="content" name="content">
+        <p>확인용ㅇㅇ</p>
+        <p>
+          <iframe iframe width="560" height="315" src="https://www.youtube.com/watch?v=BJmvrG95pTs&list=RDBJmvrG95pTs&start_radio=1"></iframe>
+        </p>
+        <p>확인용ㅇㅇ</p>
+      </textarea
+      ><br /><br />
+      <button type="submit">등록</button>
+    </form>
+
+    <script>
+      $("#content").summernote({
+        height: 300,
+        placeholder: "내용을 입력하세요",
+      });
+    </script>
+  </body>
+</html>
